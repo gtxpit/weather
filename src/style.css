@@ -1,3 +1,24 @@
+body.sunny {
+  background-image: url('/sunny.avif');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+body.cloudy {
+  background-image: url('/cloudy.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+body.snowy {
+  background-image: url('/snow.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: burlywood;
