@@ -8,7 +8,7 @@ const weatherText = document.querySelector('#weatherText')
 let weatherTemp = {}
 
 function weatherLoad(city) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`, { mode: 'cors' })
         .then(response => response.json())
         .then(data => {
             if (data.cod !== 200) {
