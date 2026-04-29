@@ -1,8 +1,9 @@
-const apiKey = import.meta.env.VITE_WEATHER_KEY || 'dec2aa587a7d5f50df886b63ac59a289'const inputSave = document.querySelector("input")
-const resultSave = document.querySelector(".result")
+const apiKey = 'dec2aa587a7d5f50df886b63ac59a289'
+
+const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
 const iconImg = document.querySelector('#weatherIcon')
-
+const weatherText = document.querySelector('#weatherText')
 
 let weatherTemp = {}
 
@@ -11,9 +12,10 @@ function weatherLoad(city) {
         .then(response => response.json())
         .then(data => {
             if (data.cod !== 200) {
-                resultSave.textContent = 'Город не найден, братан'
+                weatherText.textContent = 'Город не найден, братан'
                 return
             }
+
             weatherTemp = {
                 temp: data.main.temp,
                 city: data.name,
@@ -21,6 +23,12 @@ function weatherLoad(city) {
                 wind: data.wind.speed,
                 icon: data.weather[0].icon
             }
+
+            const iconUrl = `https://openweathermap.org/img/wn/${weatherTemp.icon}@2x.png`
+            iconImg.src = iconUrl
+
+            weatherText.textContent = `${weatherTemp.city}: ${weatherTemp.temp}°, ${weatherTemp.description}, ветер ${weatherTemp.wind} м/с`
+
             const iconCode = weatherTemp.icon
             const weatherType = iconCode.substring(0, 2)
 
@@ -33,30 +41,23 @@ function weatherLoad(city) {
             } else if (weatherType === '13') {
                 document.body.classList.add('snowy')
             } else {
-                document.body.classList.add('cloudy') // дождь и всё остальное — на cloudy
+                document.body.classList.add('cloudy')
             }
-
-            const iconUrl = `https://openweathermap.org/img/wn/${weatherTemp.icon}@2x.png`
-            iconImg.src = iconUrl
-
-            resultSave.textContent = `${weatherTemp.city}: ${weatherTemp.temp}°, ${weatherTemp.description}, ветер ${weatherTemp.wind} м/с `
         })
         .catch(error => {
             console.error(error)
-            resultSave.textContent = 'Ошибка, проверь консоль'
+            weatherText.textContent = 'Ошибка, проверь консоль'
         })
 }
 
 button.addEventListener('click', () => {
     const city = inputSave.value.trim()
     if (city === '') {
-        resultSave.textContent = 'Напиши город на английском'
+        weatherText.textContent = 'Напиши город на английском'
         return
     }
     weatherLoad(city)
 })
-
-
 
 inputSave.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
