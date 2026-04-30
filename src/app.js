@@ -1,5 +1,4 @@
-const apiKey = 'dec2aa587a7d5f50df886b63ac59a289'
-
+const apiKey = import.meta.env.VITE_WEATHER_KEY
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
 const iconImg = document.querySelector('#weatherIcon')
