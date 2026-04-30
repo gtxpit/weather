@@ -43,10 +43,10 @@ body {
   justify-content: center;
   gap: 20px;
   text-align: center;
-  background-color: #fff;
+  background-color: #f5f3dd;
   border-radius: 20px;
-  width: 650px;
-  height: 450px;
+  width: 1000px;
+  height: 650px;
 }
 
 .input {
@@ -72,6 +72,49 @@ input[type="button"] {
 }
 
 .result {
-  margin-top: 20px;
+
   font-size: 20px;
+}
+
+.forecast-cards {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.forecast-card {
+  background: rgba(170, 167, 167, 0.9);
+  border-radius: 15px;
+  padding: 10px;
+  text-align: center;
+  min-width: 70px;
+}
+
+.forecast-card img {
+  width: 40px;
+  height: 40px;
+}
+
+.forecast-card .temp {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);   
+  }
+}
+
+.container {
+  animation: fadeInPage 0.8s ease-out forwards;
 }
