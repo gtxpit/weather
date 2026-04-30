@@ -1,4 +1,4 @@
-const apiKey = import.meta.env.VITE_WEATHER_KEY
+const apiKey = 'dec2aa587a7d5f50df886b63ac59a289'
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
 const iconImg = document.querySelector('#weatherIcon')
@@ -23,7 +23,7 @@ function weatherLoad(city) {
 
             const weatherType = icon.substring(0, 2)
             document.body.className = ''
-            
+
             if (weatherType === '01') {
                 document.body.classList.add('sunny')
             } else if (weatherType === '02' || weatherType === '03' || weatherType === '04') {
