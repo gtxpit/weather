@@ -80,7 +80,7 @@ function weatherLoad(city) {
 button.addEventListener('click', () => {
     const city = inputSave.value.trim()
     if (city === '') {
-        weatherText.textContent = 'Напиши город на английском'
+        weatherText.textContent = 'Напиши город '
         return
     }
     weatherLoad(city)
@@ -125,11 +125,18 @@ function renderHistoryList() {
     
     savedCities.forEach(city => {
         const cityBtn = document.createElement('button')
-        cityBtn.textContent = city
+        cityBtn.textContent = city + ' ✖'
         cityBtn.classList.add('history-btn')
         cityBtn.addEventListener('click', () => {
-            inputSave.value = city
-            weatherLoad(city)
+            if (confirm(`Удалить ${city} из избранного?`)) {
+                savedCities = savedCities.filter(c => c !== city)
+                saveCitiesToStorage()
+                renderHistoryList()
+                updateHistoryVisibility()
+            } else {
+                inputSave.value = city
+                weatherLoad(city)
+            }
         })
         buttonsContainer.appendChild(cityBtn)
     })

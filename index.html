@@ -11,29 +11,25 @@
 </head>
 
 <body>
-  <div class="history">
-    <h2>History</h2>
-  </div>
   <div class="container">
+    <div class="history">
+      <h2>Favorite city</h2>
+    </div>
     <h1>Weather</h1>
     <div class="input">
-      <!-- Исправленный HTML -->
-      <button class="addForever" title="Добавить в избранное">🗸</button>
+      <button class="addForever">★</button>
       <input type="text" placeholder="Enter your city">
-      <input type="button" value="&#10003;">
+      <input type="button" value="✓">
     </div>
-
     <div class="result">
       <img id="weatherIcon">
       <div id="weatherText"></div>
     </div>
     <div class="forecast">
-      <h2></h2>
       <div id="forecastCards" class="forecast-cards"></div>
     </div>
   </div>
-  </div>
-  <script type="module" src="/src/app.js"></script>
+  <script src="/src/app.js"></script>
 </body>
 
 </html>
