@@ -92,12 +92,10 @@ inputSave.addEventListener('keypress', function (event) {
     }
 })
 
-// Функция сохранения городов в localStorage
 function saveCitiesToStorage() {
     localStorage.setItem('favoriteCities', JSON.stringify(savedCities))
 }
 
-// Функция загрузки городов из localStorage
 function loadCitiesFromStorage() {
     const stored = localStorage.getItem('favoriteCities')
     if (stored) {
@@ -109,17 +107,14 @@ function loadCitiesFromStorage() {
     updateHistoryVisibility()
 }
 
-// Функция отрисовки кнопок городов
 function renderHistoryList() {
     const historyContainer = document.querySelector('.history')
     if (!historyContainer) return
     
-    // Очищаем всё, кроме заголовка
     const title = historyContainer.querySelector('h2')
     historyContainer.innerHTML = ''
     if (title) historyContainer.appendChild(title)
     
-    // Создаем контейнер для кнопок
     const buttonsContainer = document.createElement('div')
     buttonsContainer.className = 'history-buttons'
     
@@ -144,7 +139,6 @@ function renderHistoryList() {
     historyContainer.appendChild(buttonsContainer)
 }
 
-// Функция показа/скрытия блока истории
 function updateHistoryVisibility() {
     if (savedCities.length > 0) {
         historyBlock.style.display = 'block'
@@ -153,7 +147,6 @@ function updateHistoryVisibility() {
     }
 }
 
-// Обработчик звездочки
 saveCityButton.addEventListener('click', () => {
     if (currentCityName && !savedCities.includes(currentCityName)) {
         savedCities.push(currentCityName)
@@ -166,5 +159,4 @@ saveCityButton.addEventListener('click', () => {
     }
 })
 
-// Загружаем города при старте
 loadCitiesFromStorage()
