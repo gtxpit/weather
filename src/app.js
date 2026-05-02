@@ -1,10 +1,16 @@
+const historyBlock = document.querySelector('.history')
+let savedCities = []
 const apiKey = 'dec2aa587a7d5f50df886b63ac59a289'
+const saveCityButton = document.querySelector(".addForever")
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
 const iconImg = document.querySelector('#weatherIcon')
 const weatherText = document.querySelector('#weatherText')
-const forecastCards = document.querySelector('#forecastCards')
+const forecastCards = document.querySelector('#forecastCards')  
+let currentCityName = ''
+
 function weatherLoad(city) {
+    saveCityButton.style.display = 'none'
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
@@ -14,12 +20,14 @@ function weatherLoad(city) {
             }
             const temp = Math.round(data.main.temp)
             const cityName = data.name
+            currentCityName = cityName
             const description = data.weather[0].description
             const wind = data.wind.speed
             const icon = data.weather[0].icon
 
             iconImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
-            weatherText.textContent = `${cityName}: ${temp}°, ${description}, ветер ${wind} м/с`
+            weatherText.textContent = `${cityName}: ${temp}°, ${description}, Wind ${wind} м/с`
+            saveCityButton.style.display = 'inline-block'
 
             const weatherType = icon.substring(0, 2)
             document.body.className = ''
@@ -68,6 +76,7 @@ function weatherLoad(city) {
             forecastCards.innerHTML = '<p>Ошибка загрузки прогноза</p>'
         })
 }
+
 button.addEventListener('click', () => {
     const city = inputSave.value.trim()
     if (city === '') {
@@ -76,8 +85,79 @@ button.addEventListener('click', () => {
     }
     weatherLoad(city)
 })
+
 inputSave.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         button.click()
     }
 })
+
+// Функция сохранения городов в localStorage
+function saveCitiesToStorage() {
+    localStorage.setItem('favoriteCities', JSON.stringify(savedCities))
+}
+
+// Функция загрузки городов из localStorage
+function loadCitiesFromStorage() {
+    const stored = localStorage.getItem('favoriteCities')
+    if (stored) {
+        savedCities = JSON.parse(stored)
+    } else {
+        savedCities = []
+    }
+    renderHistoryList()
+    updateHistoryVisibility()
+}
+
+// Функция отрисовки кнопок городов
+function renderHistoryList() {
+    const historyContainer = document.querySelector('.history')
+    if (!historyContainer) return
+    
+    // Очищаем всё, кроме заголовка
+    const title = historyContainer.querySelector('h2')
+    historyContainer.innerHTML = ''
+    if (title) historyContainer.appendChild(title)
+    
+    // Создаем контейнер для кнопок
+    const buttonsContainer = document.createElement('div')
+    buttonsContainer.className = 'history-buttons'
+    
+    savedCities.forEach(city => {
+        const cityBtn = document.createElement('button')
+        cityBtn.textContent = city
+        cityBtn.classList.add('history-btn')
+        cityBtn.addEventListener('click', () => {
+            inputSave.value = city
+            weatherLoad(city)
+        })
+        buttonsContainer.appendChild(cityBtn)
+    })
+    
+    historyContainer.appendChild(buttonsContainer)
+}
+
+// Функция показа/скрытия блока истории
+function updateHistoryVisibility() {
+    if (savedCities.length > 0) {
+        historyBlock.style.display = 'block'
+    } else {
+        historyBlock.style.display = 'none'
+    }
+}
+
+// Обработчик звездочки
+saveCityButton.addEventListener('click', () => {
+    if (currentCityName && !savedCities.includes(currentCityName)) {
+        savedCities.push(currentCityName)
+        saveCitiesToStorage()
+        renderHistoryList()
+        updateHistoryVisibility()
+        console.log('Сохранено:', savedCities)
+    } else if (savedCities.includes(currentCityName)) {
+        console.log('Город уже в истории')
+    }
+})
+
+// Загружаем города при старте
+loadCitiesFromStorage()
