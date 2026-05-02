@@ -136,17 +136,17 @@ input[type="button"] {
 }
 
 .history {
- position: absolute;
-  top: 20px;          
-  left: 20px;         
-  
-  background-color: white; 
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  background-color: white;
   border-radius: 15px;
   padding: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
-  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
   min-width: 150px;
-  z-index: 10;        
+  z-index: 10;
 
 }
 
@@ -177,4 +177,13 @@ input[type="button"] {
 .history-btn:hover {
   background: burlywood;
   color: white;
+}
+
+.home-button {
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  top: 30px;
+  left: 180px;
+  z-index: 11;
 }
