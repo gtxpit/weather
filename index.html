@@ -7,14 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>weather</title>
   <link rel="icon" type="image/png" href="/weather/assets/cloudy-C-4AR3hE.png">.
-  <script type="module" crossorigin src="/weather/assets/index-DJl8ibU3.js"></script>
-  <link rel="stylesheet" crossorigin href="/weather/assets/index-CiT5-A6f.css">
+  <script type="module" crossorigin src="/weather/assets/index-Cj1I4-lt.js"></script>
+  <link rel="stylesheet" crossorigin href="/weather/assets/index-CaPARsmW.css">
 </head>
 
 <body>
+  <div class="history">
+    <h2>History</h2>
+  </div>
   <div class="container">
     <h1>Weather</h1>
     <div class="input">
+      <!-- Исправленный HTML -->
+      <button class="addForever" title="Добавить в избранное">🗸</button>
       <input type="text" placeholder="Enter your city">
       <input type="button" value="&#10003;">
     </div>
@@ -28,8 +33,7 @@
       <div id="forecastCards" class="forecast-cards"></div>
     </div>
   </div>
-  </div>
-
+  </div>
 </body>
 
 </html>
