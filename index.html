@@ -7,33 +7,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>weather</title>
   <link rel="icon" type="image/png" href="/weather/assets/cloudy-C-4AR3hE.png">.
-  <script type="module" crossorigin src="/weather/assets/index-Cj1I4-lt.js"></script>
-  <link rel="stylesheet" crossorigin href="/weather/assets/index-CaPARsmW.css">
+  <link rel="stylesheet" crossorigin href="/weather/assets/index-DZSiA2lq.css">
 </head>
 
 <body>
-  <div class="history">
-    <h2>History</h2>
-  </div>
   <div class="container">
+    <div class="history">
+      <h2>Favorite city</h2>
+    </div>
     <h1>Weather</h1>
     <div class="input">
-      <!-- Исправленный HTML -->
-      <button class="addForever" title="Добавить в избранное">🗸</button>
+      <button class="addForever">★</button>
       <input type="text" placeholder="Enter your city">
-      <input type="button" value="&#10003;">
+      <input type="button" value="✓">
     </div>
-
     <div class="result">
       <img id="weatherIcon">
       <div id="weatherText"></div>
     </div>
     <div class="forecast">
-      <h2></h2>
       <div id="forecastCards" class="forecast-cards"></div>
     </div>
   </div>
-  </div>
+  <script src="/src/app.js"></script>
 </body>
 
 </html>
