@@ -197,6 +197,25 @@ input[type="button"] {
 #location:hover {
   zoom: 1.03;
   transition: 0.3s;
-  background-color: rgb(245, 205, 151);
+  cursor: pointer;
+}
 
+.delete-btn {
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.clear-history-btn {
+  background-color: burlywood;
+  border-radius: 3px;
+}
+
+.clear-history-btn:hover {
+  zoom: 1.03;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  cursor: pointer;
 }
