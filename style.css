@@ -180,12 +180,24 @@ input[type="button"] {
 }
 
 .home-button {
-  width: 150px;
-  height: 50px;
   position: absolute;
-  top: 30px;
-  left: 180px;
-  z-index: 11;
+  top: 20px;
+  right: 20px;
+  background: burlywood;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.2s;
+  z-index: 20;
+}
+
+.home-button:hover {
+  zoom: 1.03;
+  cursor: pointer;
+  background: burlywood;
 }
 
 #location {
@@ -206,14 +218,19 @@ input[type="button"] {
 }
 
 .clear-history-btn {
-  background-color: burlywood;
-  border-radius: 3px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  color: #333;
 }
 
 .clear-history-btn:hover {
   zoom: 1.03;
-  transition: 0.3s;
   cursor: pointer;
+  background: burlywood;
 }
 
 .delete-btn:hover {
