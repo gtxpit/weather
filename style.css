@@ -236,6 +236,40 @@ input[type="button"] {
 .delete-btn:hover {
   cursor: pointer;
 }
-@media(max-width:480px) {
+@media (max-width: 659px) {
+    body {
+        flex-direction: column;
+        padding: 20px;
+    }
 
+    .history {
+        position: static;
+        width: 100%;
+        margin-bottom: 20px;
+        order: 1;
+    }
+
+    .container {
+        order: 2;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .history-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .history-item {
+        flex-direction: column;
+        min-width: 80px;
+    }
+
+    .home-button {
+        position: static;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
 }
