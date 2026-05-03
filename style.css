@@ -187,3 +187,16 @@ input[type="button"] {
   left: 180px;
   z-index: 11;
 }
+
+#location {
+  border-radius: 3px;
+  background-color: burlywood;
+  ;
+}
+
+#location:hover {
+  zoom: 1.03;
+  transition: 0.3s;
+  background-color: rgb(245, 205, 151);
+
+}

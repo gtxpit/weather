@@ -6,9 +6,37 @@ const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
 const iconImg = document.querySelector('#weatherIcon')
 const weatherText = document.querySelector('#weatherText')
-const forecastCards = document.querySelector('#forecastCards')  
+const locationBtn = document.getElementById('location')
+const forecastCards = document.querySelector('#forecastCards')
 let currentCityName = ''
+// ===== ГЕОЛОКАЦИЯ =====
+function weatherByCoords(lat, lon) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.cod !== 200) {
+                weatherText.textContent = 'Город не найден'
+                return
+            }
+            weatherText.textContent = `${data.name}: ${Math.round(data.main.temp)}°, ${data.weather[0].description}`
+            iconImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+            saveCityButton.style.display = 'inline-block'
+            currentCityName = data.name
+        })
+        .catch(() => weatherText.textContent = 'Ошибка геолокации')
+}
 
+locationBtn.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+        weatherText.textContent = 'Геолокация не поддерживается'
+        return
+    }
+    weatherText.textContent = 'Определяю...'
+    navigator.geolocation.getCurrentPosition(
+        pos => weatherByCoords(pos.coords.latitude, pos.coords.longitude),
+        () => weatherText.textContent = 'Разрешите доступ к геолокации'
+    )
+})
 function weatherLoad(city) {
     saveCityButton.style.display = 'none'
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
@@ -110,14 +138,14 @@ function loadCitiesFromStorage() {
 function renderHistoryList() {
     const historyContainer = document.querySelector('.history')
     if (!historyContainer) return
-    
+
     const title = historyContainer.querySelector('h2')
     historyContainer.innerHTML = ''
     if (title) historyContainer.appendChild(title)
-    
+
     const buttonsContainer = document.createElement('div')
     buttonsContainer.className = 'history-buttons'
-    
+
     savedCities.forEach(city => {
         const cityBtn = document.createElement('button')
         cityBtn.textContent = city + ' ✖'
@@ -135,7 +163,7 @@ function renderHistoryList() {
         })
         buttonsContainer.appendChild(cityBtn)
     })
-    
+
     historyContainer.appendChild(buttonsContainer)
 }
 
