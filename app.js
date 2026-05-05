@@ -1,6 +1,6 @@
 const historyBlock = document.querySelector('.history')
 let savedCities = []
-const apiKey = 'dec2aa587a7d5f50df886b63ac59a289'
+const apiKey = import.meta.env.VITE_WEATHER_KEY
 const saveCityButton = document.querySelector(".addForever")
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
@@ -9,43 +9,27 @@ const weatherText = document.querySelector('#weatherText')
 const locationBtn = document.getElementById('location')
 const forecastCards = document.querySelector('#forecastCards')
 let currentCityName = ''
-// ===== ГЕОЛОКАЦИЯ =====
+
+// ===== ГЕОЛОКАЦИЯ (только текущая погода, без прогноза) =====
 function weatherByCoords(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
         .then(res => res.json())
         .then(data => {
             if (data.cod !== 200) {
                 weatherText.textContent = 'Город не найден'
+                locationBtn.style.display = 'inline-block'
                 return
             }
             weatherText.textContent = `${data.name}: ${Math.round(data.main.temp)}°, ${data.weather[0].description}`
             iconImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
             saveCityButton.style.display = 'inline-block'
             currentCityName = data.name
+            locationBtn.style.display = 'none'
         })
-        .catch(() => weatherText.textContent = 'Ошибка геолокации')
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-        .then(res => res.json())
-        .then(data => {
-            const container = document.querySelector('#forecastCards');
-            container.innerHTML = '';
-            for (let i = 0; i < data.list.length && i < 40; i += 8) {
-                const day = data.list[i];
-                const date = new Date(day.dt_txt);
-                const dayName = date.toLocaleDateString('ru-RU', { weekday: 'short' });
-                const temp = Math.round(day.main.temp);
-                const icon = day.weather[0].icon;
-                const card = document.createElement('div');
-                card.className = 'forecast-card';
-                card.innerHTML = `
-                <div>${dayName}</div>
-                <img src="https://openweathermap.org/img/wn/${icon}.png">
-                <div class="temp">${temp}°</div>
-            `;
-                container.appendChild(card);
-            }
+        .catch(() => {
+            weatherText.textContent = 'Ошибка геолокации'
+            locationBtn.style.display = 'inline-block'
         })
-        .catch(err => console.error('Ошибка прогноза по гео:', err));
 }
 
 locationBtn.addEventListener('click', () => {
@@ -59,13 +43,18 @@ locationBtn.addEventListener('click', () => {
         () => weatherText.textContent = 'Разрешите доступ к геолокации'
     )
 })
+
+// ===== РУЧНОЙ ПОИСК (погода + прогноз) =====
 function weatherLoad(city) {
     saveCityButton.style.display = 'none'
+    locationBtn.style.display = 'inline-block'
+    
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
             if (data.cod !== 200) {
                 weatherText.textContent = 'Город не найден, братан'
+                locationBtn.style.display = 'inline-block'
                 return
             }
             const temp = Math.round(data.main.temp)
@@ -78,6 +67,7 @@ function weatherLoad(city) {
             iconImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
             weatherText.textContent = `${cityName}: ${temp}°, ${description}, Wind ${wind} м/с`
             saveCityButton.style.display = 'inline-block'
+            locationBtn.style.display = 'none'
 
             const weatherType = icon.substring(0, 2)
             document.body.className = ''
@@ -95,7 +85,9 @@ function weatherLoad(city) {
         .catch(error => {
             console.error(error)
             weatherText.textContent = 'Ошибка, проверь консоль'
+            locationBtn.style.display = 'inline-block'
         })
+    
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
@@ -131,6 +123,7 @@ button.addEventListener('click', () => {
     const city = inputSave.value.trim()
     if (city === '') {
         weatherText.textContent = 'Напиши город '
+        locationBtn.style.display = 'inline-block'
         return
     }
     weatherLoad(city)
@@ -169,11 +162,9 @@ function renderHistoryList() {
     buttonsContainer.className = 'history-buttons'
 
     savedCities.forEach(city => {
-        // Контейнер для кнопки города и крестика
         const wrapper = document.createElement('div')
         wrapper.className = 'history-item'
 
-        // Кнопка с названием города (просто загружает погоду)
         const cityBtn = document.createElement('button')
         cityBtn.textContent = city
         cityBtn.classList.add('history-btn')
@@ -182,7 +173,7 @@ function renderHistoryList() {
             inputSave.value = city
             weatherLoad(city)
         })
-        // Крестик (только он вызывает удаление)
+
         const deleteBtn = document.createElement('button')
         deleteBtn.textContent = '✖'
         deleteBtn.classList.add('delete-btn')
@@ -201,17 +192,22 @@ function renderHistoryList() {
         buttonsContainer.appendChild(wrapper)
     })
 
-    historyContainer.appendChild(buttonsContainer)
-        // Добавляем кнопку очистки, если есть города
     if (savedCities.length > 0) {
         const clearBtn = document.createElement('button')
         clearBtn.textContent = '🗑️ Очистить все города'
         clearBtn.classList.add('clear-history-btn')
         clearBtn.addEventListener('click', () => {
-            clearAllHistory()
+            if (confirm('Удалить ВСЕ города из избранного?')) {
+                savedCities = []
+                saveCitiesToStorage()
+                renderHistoryList()
+                updateHistoryVisibility()
+            }
         })
         buttonsContainer.appendChild(clearBtn)
     }
+
+    historyContainer.appendChild(buttonsContainer)
 }
 
 function updateHistoryVisibility() {
@@ -233,12 +229,5 @@ saveCityButton.addEventListener('click', () => {
         console.log('Город уже в истории')
     }
 })
-function clearAllHistory() {
-    if (confirm('🗑️ Вы уверены, что хотите удалить ВСЕ города из избранного?')) {
-        savedCities = []
-        saveCitiesToStorage()
-        renderHistoryList()
-        updateHistoryVisibility()
-    }
-}
-loadCitiesFromStorage()
+
+loadCitiesFromStorage() 
