@@ -44,11 +44,12 @@ locationBtn.addEventListener('click', () => {
     )
 })
 
+
 // ===== РУЧНОЙ ПОИСК (погода + прогноз) =====
 function weatherLoad(city) {
     saveCityButton.style.display = 'none'
     locationBtn.style.display = 'inline-block'
-    
+
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
@@ -87,7 +88,7 @@ function weatherLoad(city) {
             weatherText.textContent = 'Ошибка, проверь консоль'
             locationBtn.style.display = 'inline-block'
         })
-    
+
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
@@ -194,7 +195,7 @@ function renderHistoryList() {
 
     if (savedCities.length > 0) {
         const clearBtn = document.createElement('button')
-        clearBtn.textContent = '🗑️ Очистить все города'
+        clearBtn.textContent = '⌫ Очистить все города'
         clearBtn.classList.add('clear-history-btn')
         clearBtn.addEventListener('click', () => {
             if (confirm('Удалить ВСЕ города из избранного?')) {
@@ -230,4 +231,16 @@ saveCityButton.addEventListener('click', () => {
     }
 })
 
+//часы
+function updateLocalTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const timeElement = document.getElementById('cityTime');
+    if (timeElement) {
+        timeElement.textContent = timeString;
+    }
+}
+
+updateLocalTime();
+setInterval(updateLocalTime, 1000);
 loadCitiesFromStorage() 
