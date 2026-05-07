@@ -11,6 +11,9 @@ permissions:
 
 jobs:
   build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +29,7 @@ jobs:
         run: npm install
 
       - name: Build
-        # Здесь мы берем секрет из настроек репозитория и передаем его в Vite
+        # Здесь Vite забирает твой секретный ключ и вставляет его в JS
         env:
           VITE_WEATHER_KEY: ${{ secrets.VITE_WEATHER_KEY }}
         run: npm run build
@@ -37,7 +40,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Vite собирает проект в папку dist по умолчанию
           path: './dist'
 
       - name: Deploy to GitHub Pages
