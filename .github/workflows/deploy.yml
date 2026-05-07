@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # или master, проверьте имя вашей ветки
+    branches: [ main ] # Если твоя ветка называется master, замени main на master
 
 permissions:
   contents: read
@@ -26,9 +26,9 @@ jobs:
         run: npm install
 
       - name: Build
-        # Вот здесь магия: GitHub берет секрет и отдает его Vite
+        # Здесь мы берем секрет из настроек репозитория и передаем его в Vite
         env:
-          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_WEATHER_KEY: ${{ secrets.VITE_WEATHER_KEY }}
         run: npm run build
 
       - name: Setup Pages
@@ -37,7 +37,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Vite по умолчанию собирает в папку dist
+          # Vite собирает проект в папку dist по умолчанию
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
