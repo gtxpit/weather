@@ -233,14 +233,14 @@ saveCityButton.addEventListener('click', () => {
 
 //часы
 function updateLocalTime() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const now = new Date()
+    const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
     const timeElement = document.getElementById('cityTime');
     if (timeElement) {
-        timeElement.textContent = timeString;
+        timeElement.textContent = timeString
     }
 }
 
-updateLocalTime();
-setInterval(updateLocalTime, 1000);
+updateLocalTime()
+setInterval(updateLocalTime, 1000)
 loadCitiesFromStorage() 
