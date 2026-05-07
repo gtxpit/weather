@@ -39,6 +39,7 @@ async function weatherLoad(city, lat = null, lon = null) {
         // Отрисовка текущей погоды
         const temp = Math.round(weatherData.main.temp)
         currentCityName = weatherData.name
+        // Исправлено: добавляем [0] для доступа к объекту внутри массива weather
         const description = weatherData.weather[0].description
         const wind = weatherData.wind.speed
         const icon = weatherData.weather[0].icon
@@ -64,21 +65,25 @@ async function weatherLoad(city, lat = null, lon = null) {
         }
 
         forecastCards.innerHTML = ''
+        // Цикл по прогнозу (каждые 8 записей = 24 часа)
         for (let i = 8; i < forecastData.list.length && i < 48; i += 8) {
             const item = forecastData.list[i]
             const date = new Date(item.dt_txt)
             const dayName = date.toLocaleDateString('ru-RU', { weekday: 'short' })
+            const forecastIcon = item.weather[0].icon
+            const forecastDesc = item.weather[0].description
+            
             const card = document.createElement('div')
             card.className = 'forecast-card'
             card.innerHTML = `
                 <div>${dayName}</div>
-                <img src="https://openweathermap.org{item.weather[0].icon}.png" alt="${item.weather[0].description}">
+                <img src="https://openweathermap.org{forecastIcon}.png" alt="${forecastDesc}">
                 <div class="temp">${Math.round(item.main.temp)}°</div>
             `
             forecastCards.appendChild(card)
         }
     } catch (error) {
-        console.error(error)
+        console.error("Ошибка в weatherLoad:", error)
         weatherText.textContent = 'Ошибка сети, проверь консоль'
         forecastCards.innerHTML = ''
     }
@@ -100,8 +105,11 @@ locationBtn.addEventListener('click', () => {
 // ===== ОБРАБОТЧИКИ КНОПОК =====
 button.addEventListener('click', () => {
     const city = inputSave.value.trim()
-    if (city) weatherLoad(city)
-    else weatherText.textContent = 'Напиши город'
+    if (city) {
+        weatherLoad(city)
+    } else {
+        weatherText.textContent = 'Напиши город'
+    }
 })
 
 inputSave.addEventListener('keypress', (e) => {
@@ -123,6 +131,8 @@ function loadCitiesFromStorage() {
 function renderHistoryList() {
     const historyContainer = document.querySelector('.history')
     if (!historyContainer) return
+    
+    // Очищаем и добавляем заголовок
     historyContainer.innerHTML = '<h2>Favorite city</h2>'
 
     const buttonsContainer = document.createElement('div')
@@ -131,20 +141,30 @@ function renderHistoryList() {
     savedCities.forEach(city => {
         const wrapper = document.createElement('div')
         wrapper.className = 'history-item'
-        wrapper.innerHTML = `
-            <button class="history-btn">${city}</button>
-            <button class="delete-btn">✖</button>
-        `
-        wrapper.querySelector('.history-btn').onclick = () => {
+        
+        const cityBtn = document.createElement('button')
+        cityBtn.className = 'history-btn'
+        cityBtn.textContent = city
+        cityBtn.onclick = () => {
             inputSave.value = city
             weatherLoad(city)
         }
-        wrapper.querySelector('.delete-btn').onclick = () => {
+
+        const deleteBtn = document.createElement('button')
+        deleteBtn.className = 'delete-btn'
+        deleteBtn.textContent = '✖'
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation()
             if (confirm(`Удалить ${city}?`)) {
                 savedCities = savedCities.filter(c => c !== city)
-                saveCitiesToStorage(); renderHistoryList(); updateHistoryVisibility()
+                saveCitiesToStorage()
+                renderHistoryList()
+                updateHistoryVisibility()
             }
         }
+
+        wrapper.appendChild(cityBtn)
+        wrapper.appendChild(deleteBtn)
         buttonsContainer.appendChild(wrapper)
     })
 
@@ -153,8 +173,11 @@ function renderHistoryList() {
         clearBtn.className = 'clear-history-btn'
         clearBtn.textContent = '🗑️ Очистить всё'
         clearBtn.onclick = () => {
-            if (confirm('Удалить всё?')) {
-                savedCities = []; saveCitiesToStorage(); renderHistoryList(); updateHistoryVisibility()
+            if (confirm('Удалить все города из избранного?')) {
+                savedCities = []
+                saveCitiesToStorage()
+                renderHistoryList()
+                updateHistoryVisibility()
             }
         }
         buttonsContainer.appendChild(clearBtn)
@@ -175,4 +198,5 @@ saveCityButton.addEventListener('click', () => {
     }
 })
 
+// Загрузка при старте
 loadCitiesFromStorage()
