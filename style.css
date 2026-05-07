@@ -72,10 +72,14 @@ input[type="button"] {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: burlywood;
   color: white;
   border: none;
   border-radius: 5px;
+}
+
+input[type="button"]:hover {
+  background-color: rgb(200, 182, 159);
 }
 
 .result {
@@ -140,13 +144,17 @@ input[type="button"] {
   display: none;
 }
 
+.addForever:hover {
+  cursor: pointer;
+  background-color: rgb(200, 182, 159);
+}
+
 .history {
   position: absolute;
   top: 20px;
   left: 20px;
-
   background-color: white;
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
@@ -223,8 +231,12 @@ input[type="button"] {
 }
 
 .delete-btn {
-  padding: 5px;
   margin-left: 5px;
+}
+
+.delete-btn:hover {
+  background: burlywood;
+
 }
 
 .clear-history-btn {
@@ -238,7 +250,6 @@ input[type="button"] {
 }
 
 .clear-history-btn:hover {
-  zoom: 1.03;
   cursor: pointer;
   background: burlywood;
 }
