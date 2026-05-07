@@ -16,12 +16,12 @@ async function weatherLoad(city, lat = null, lon = null) {
     locationBtn.style.display = 'inline-block'
     forecastCards.innerHTML = '<p>Загрузка прогноза...</p>'
     
-    // Формируем URL в зависимости от того, есть координаты или название
-    const weatherUrl = lat && lon 
+    // ВАЖНО: Используем обратные кавычки (клавиша Ё) для подстановки переменных
+    const weatherUrl = (lat && lon) 
         ? `https://openweathermap.org{lat}&lon=${lon}&appid=${apiKey}&units=metric`
         : `https://openweathermap.org{city}&appid=${apiKey}&units=metric`
     
-    const forecastUrl = lat && lon
+    const forecastUrl = (lat && lon)
         ? `https://openweathermap.org{lat}&lon=${lon}&appid=${apiKey}&units=metric`
         : `https://openweathermap.org{city}&appid=${apiKey}&units=metric`
 
@@ -39,7 +39,6 @@ async function weatherLoad(city, lat = null, lon = null) {
         // Отрисовка текущей погоды
         const temp = Math.round(weatherData.main.temp)
         currentCityName = weatherData.name
-        // Исправлено: добавляем [0] для доступа к объекту внутри массива weather
         const description = weatherData.weather[0].description
         const wind = weatherData.wind.speed
         const icon = weatherData.weather[0].icon
@@ -65,7 +64,6 @@ async function weatherLoad(city, lat = null, lon = null) {
         }
 
         forecastCards.innerHTML = ''
-        // Цикл по прогнозу (каждые 8 записей = 24 часа)
         for (let i = 8; i < forecastData.list.length && i < 48; i += 8) {
             const item = forecastData.list[i]
             const date = new Date(item.dt_txt)
@@ -84,7 +82,7 @@ async function weatherLoad(city, lat = null, lon = null) {
         }
     } catch (error) {
         console.error("Ошибка в weatherLoad:", error)
-        weatherText.textContent = 'Ошибка сети, проверь консоль'
+        weatherText.textContent = 'Ошибка сети или API'
         forecastCards.innerHTML = ''
     }
 }
@@ -97,8 +95,12 @@ locationBtn.addEventListener('click', () => {
     }
     weatherText.textContent = 'Определяю...'
     navigator.geolocation.getCurrentPosition(
-        pos => weatherLoad(null, pos.coords.latitude, pos.coords.longitude),
-        () => weatherText.textContent = 'Разрешите доступ к геолокации'
+        pos => {
+            weatherLoad(null, pos.coords.latitude, pos.coords.longitude)
+        },
+        () => {
+            weatherText.textContent = 'Разрешите доступ к геолокации'
+        }
     )
 })
 
@@ -131,8 +133,6 @@ function loadCitiesFromStorage() {
 function renderHistoryList() {
     const historyContainer = document.querySelector('.history')
     if (!historyContainer) return
-    
-    // Очищаем и добавляем заголовок
     historyContainer.innerHTML = '<h2>Favorite city</h2>'
 
     const buttonsContainer = document.createElement('div')
@@ -198,5 +198,4 @@ saveCityButton.addEventListener('click', () => {
     }
 })
 
-// Загрузка при старте
 loadCitiesFromStorage()
