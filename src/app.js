@@ -13,7 +13,7 @@ let currentCityName = ''
 // ===== ГЕОЛОКАЦИЯ (только текущая погода, без прогноза) =====
 function weatherByCoords(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-        .then(res => res.json())
+        .then(res => response.json())
         .then(data => {
             if (data.cod !== 200) {
                 weatherText.textContent = 'Город не найден'
@@ -71,8 +71,14 @@ function weatherLoad(city) {
             locationBtn.style.display = 'none'
 
             const weatherType = icon.substring(0, 2)
-            document.body.className = ''
 
+            // 1. Запоминаем, была ли тёмная тема ДО очистки
+            const isDark = document.body.classList.contains('dark')
+
+            // 2. Очищаем только классы погоды
+            document.body.classList.remove('sunny', 'cloudy', 'snowy')
+
+            // 3. Добавляем новый класс погоды
             if (weatherType === '01') {
                 document.body.classList.add('sunny')
             } else if (weatherType === '02' || weatherType === '03' || weatherType === '04') {
@@ -81,6 +87,11 @@ function weatherLoad(city) {
                 document.body.classList.add('snowy')
             } else {
                 document.body.classList.add('cloudy')
+            }
+
+            // 4. Возвращаем тёмную тему, если она была
+            if (isDark) {
+                document.body.classList.add('dark')
             }
         })
         .catch(error => {

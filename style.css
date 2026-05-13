@@ -13,7 +13,7 @@ html {
   --history-bg: white;
   --history-text: #333;
   --home-btn-bg: rgb(205, 167, 116);
-  --theme-btn-bg:rgb(205, 167, 116);
+  --theme-btn-bg: rgb(205, 167, 116);
   --forecast-bg: rgba(170, 167, 167, 0.9);
   --clear-btn-bg: #f0f0f0;
   --clear-btn-text: #333;
@@ -23,23 +23,24 @@ html {
 
 /* Тёмная тема */
 body.dark {
-  --bg-color: #121826;       
-  --text-color: #e8edf5;      
-  --card-bg: #1e2436;        
-  --input-bg: #2a3148;        
-  --input-border: #3d4560;   
-  --btn-bg: #2d3b5e;         
-  --btn-hover: #3d4d74;       
-  --history-bg: #161c2a;      
-  --history-text: #cbd5e6;    
-  --home-btn-bg: #2d3b5e;    
-  --theme-btn-bg: #2d3b5e;    
-  --forecast-bg: rgba(89, 99, 127, 0.85); 
-  --clear-btn-bg: #2a3148;    
-  --clear-btn-text: #cbd5e6;  
-  --body-bg-start: #121826;   
-  --body-bg-end: #0f1420;      
+  --bg-color: #121826;
+  --text-color: #e8edf5;
+  --card-bg: #1e2436;
+  --input-bg: #2a3148;
+  --input-border: #3d4560;
+  --btn-bg: #2d3b5e;
+  --btn-hover: #3d4d74;
+  --history-bg: #161c2a;
+  --history-text: #cbd5e6;
+  --home-btn-bg: #2d3b5e;
+  --theme-btn-bg: #2d3b5e;
+  --forecast-bg: rgba(89, 99, 127, 0.85);
+  --clear-btn-bg: #2a3148;
+  --clear-btn-text: #cbd5e6;
+  --body-bg-start: #121826;
+  --body-bg-end: #0f1420;
 }
+
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, var(--body-bg-start), var(--body-bg-end));
@@ -150,6 +151,7 @@ input[type="button"]:hover {
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 15px;
+  transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
 .forecast-card {
@@ -176,6 +178,7 @@ input[type="button"]:hover {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -289,7 +292,7 @@ body.dark .history-btn {
 
 .delete-btn {
   margin-left: 5px;
-  background: #ff4444;
+  background: burlywood;
   color: white;
   border: none;
   border-radius: 5px;
@@ -298,7 +301,7 @@ body.dark .history-btn {
 }
 
 .delete-btn:hover {
-  background: #cc0000;
+  background: rgb(137, 100, 55);
 }
 
 .clear-history-btn {
@@ -408,10 +411,12 @@ h1 {
   .forecast-cards {
     gap: 8px;
   }
+
   .forecast-card {
     min-width: 55px;
     font-size: 12px;
   }
+
   .history {
     padding: 10px;
   }
