@@ -13,7 +13,7 @@ let currentCityName = ''
 // ===== ГЕОЛОКАЦИЯ (только текущая погода, без прогноза) =====
 function weatherByCoords(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-        .then(res => response.json())
+        .then(res => res.json())
         .then(data => {
             if (data.cod !== 200) {
                 weatherText.textContent = 'Город не найден'
