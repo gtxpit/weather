@@ -1,6 +1,6 @@
 const historyBlock = document.querySelector('.history')
 let savedCities = []
-const apiKey = import.meta.env.VITE_WEATHER_KEY
+const apiKey = import.meta.env.VITE_WEATHER_KEY;
 const saveCityButton = document.querySelector(".addForever")
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
