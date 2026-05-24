@@ -1,6 +1,5 @@
 const historyBlock = document.querySelector('.history')
 let savedCities = []
-const apiKey = import.meta.env.VITE_WEATHER_KEY;
 const saveCityButton = document.querySelector(".addForever")
 const inputSave = document.querySelector("input")
 const button = document.querySelector('input[type="button"]')
@@ -10,9 +9,9 @@ const locationBtn = document.getElementById('location')
 const forecastCards = document.querySelector('#forecastCards')
 let currentCityName = ''
 
-// ===== ГЕОЛОКАЦИЯ (только текущая погода, без прогноза) =====
+// ===== ГЕОЛОКАЦИЯ =====
 function weatherByCoords(lat, lon) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+    fetch(`/api/weather?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
             if (data.cod !== 200) {
@@ -50,7 +49,8 @@ function weatherLoad(city) {
     saveCityButton.style.display = 'none'
     locationBtn.style.display = 'inline-block'
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+    // Запрос текущей погоды через прокси
+    fetch(`/api/weather?city=${city}`)
         .then(response => response.json())
         .then(data => {
             if (data.cod !== 200) {
@@ -71,14 +71,9 @@ function weatherLoad(city) {
             locationBtn.style.display = 'none'
 
             const weatherType = icon.substring(0, 2)
-
-            // 1. Запоминаем, была ли тёмная тема ДО очистки
             const isDark = document.body.classList.contains('dark')
-
-            // 2. Очищаем только классы погоды
             document.body.classList.remove('sunny', 'cloudy', 'snowy')
 
-            // 3. Добавляем новый класс погоды
             if (weatherType === '01') {
                 document.body.classList.add('sunny')
             } else if (weatherType === '02' || weatherType === '03' || weatherType === '04') {
@@ -89,7 +84,6 @@ function weatherLoad(city) {
                 document.body.classList.add('cloudy')
             }
 
-            // 4. Возвращаем тёмную тему, если она была
             if (isDark) {
                 document.body.classList.add('dark')
             }
@@ -100,7 +94,8 @@ function weatherLoad(city) {
             locationBtn.style.display = 'inline-block'
         })
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
+    // Запрос прогноза через прокси
+    fetch(`/api/weather?city=${city}&type=forecast`)
         .then(response => response.json())
         .then(data => {
             if (data.cod !== "200") {
@@ -147,6 +142,7 @@ inputSave.addEventListener('keypress', function (event) {
     }
 })
 
+// ===== РАБОТА С ИЗБРАННЫМ =====
 function saveCitiesToStorage() {
     localStorage.setItem('favoriteCities', JSON.stringify(savedCities))
 }
@@ -204,6 +200,8 @@ function renderHistoryList() {
         buttonsContainer.appendChild(wrapper)
     })
 
+    historyContainer.appendChild(buttonsContainer)
+
     if (savedCities.length > 0) {
         const clearBtn = document.createElement('button')
         clearBtn.textContent = '⌫ Очистить все города'
@@ -216,19 +214,29 @@ function renderHistoryList() {
                 updateHistoryVisibility()
             }
         })
-        buttonsContainer.appendChild(clearBtn)
+        historyContainer.appendChild(clearBtn)
     }
-
-    historyContainer.appendChild(buttonsContainer)
 }
 
 function updateHistoryVisibility() {
-    if (savedCities.length > 0) {
-        historyBlock.style.display = 'block'
-    } else {
-        historyBlock.style.display = 'none'
+    if (historyBlock) {
+        historyBlock.style.display = savedCities.length > 0 ? 'block' : 'none'
     }
 }
+
+// Добавляем город в избранное по клику на кнопку
+saveCityButton.addEventListener('click', () => {
+    if (currentCityName && !savedCities.includes(currentCityName)) {
+        savedCities.push(currentCityName)
+        saveCitiesToStorage()
+        renderHistoryList()
+        updateHistoryVisibility()
+    }
+})
+
+// Инициализация при загрузке страницы
+loadCitiesFromStorage()
+
 
 saveCityButton.addEventListener('click', () => {
     if (currentCityName && !savedCities.includes(currentCityName)) {
