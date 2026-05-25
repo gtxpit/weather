@@ -41,8 +41,13 @@ body.dark {
   --body-bg-end: #0f1420;
 }
 
+
+::placeholder {
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
+
+}
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
   background: linear-gradient(135deg, var(--body-bg-start), var(--body-bg-end));
   color: var(--text-color);
   min-height: 100vh;
@@ -277,6 +282,7 @@ body.dark .history-btn {
 #location {
   background-color: var(--btn-bg);
   color: white;
+  font-family:'Aptos', 'Segoe UI', 'Arial', sans-serif; ;
   font-weight: bold;
   padding: 8px 16px;
   font-size: 14px;
@@ -305,6 +311,7 @@ body.dark .history-btn {
 }
 
 .clear-history-btn {
+  margin-top: 15px;
   background: var(--clear-btn-bg);
   border: 1px solid #ddd;
   padding: 8px 12px;
