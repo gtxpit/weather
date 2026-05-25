@@ -237,6 +237,7 @@ input[type="button"]:hover {
 }
 
 .history-btn {
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif; 
   background: #f0f0f0;
   border: 1px solid #ddd;
   padding: 8px 12px;
@@ -282,7 +283,7 @@ body.dark .history-btn {
 #location {
   background-color: var(--btn-bg);
   color: white;
-  font-family:'Aptos', 'Segoe UI', 'Arial', sans-serif; ;
+  font-family:'Aptos', 'Segoe UI', 'Arial', sans-serif; 
   font-weight: bold;
   padding: 8px 16px;
   font-size: 14px;
