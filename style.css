@@ -222,6 +222,9 @@ input[type="button"]:hover {
   z-index: 10;
   transition: background-color 0.3s;
 }
+h2 {
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
+}
 
 .history h2 {
   margin: 0 0 10px 0;
