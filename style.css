@@ -329,6 +329,7 @@ body.dark .history-btn {
 }
 
 .time-clock {
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
   position: fixed;
   top: 20px;
   right: 20px;
