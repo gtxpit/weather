@@ -1,81 +1,43 @@
-# Weather App 🌤️
+# 🌤️ Weather App
 
-Погода и прогноз на 5 дней по городу или геолокации.
+> Минималистичное приложение для просмотра погоды и прогноза на 5 дней с геолокацией и избранными городами
 
-🔗 **[Открыть сайт](https://weather-theta-lilac.vercel.app/weather/)**
-
----
-
-## Скриншот работы приложения
-
-![alt text](image-1.png)
-
-## Возможности
-
-- Поиск города
-- Геолокация
-- Прогноз на 5 дней
-- Избранные города
-- Фон под погоду
-
-## Технологии
-
-HTML, CSS, JavaScript, OpenWeatherMap API, LocalStorage
+🔗 **Live Demo:** [weather-theta-lilac.vercel.app](https://weather-theta-lilac.vercel.app/weather/)
 
 ---
 
-## 📁 Структура проекта
-weather/
-├── src/
-│ └── modules/
-│ ├── weather.js
-│ ├── favorites.js
-│ ├── theme.js
-│ └── time.js
-├── app.js
-├── index.html
-├── style.css
-└── .env
+## 📸 Превью
 
-text
+![Weather App Screenshot](image-1.png)
 
 ---
 
-## 🚀 Запуск локально
+## ✨ Возможности
 
-```bash
-git clone https://github.com/gtxpit/weather.git
-cd weather
-npm install
-npm run dev
-Создай .env в корне:
+| Функция | Описание |
+|---------|----------|
+| 🔍 **Поиск города** | Ввод названия на английском языке |
+| 📍 **Геолокация** | Автоматическое определение погоды по вашему местоположению |
+| 📅 **Прогноз на 5 дней** | Карточки с температурой и иконками на каждый день |
+| ⭐ **Избранные города** | Сохранение городов в localStorage |
+| 🌙 **Тёмная тема** | Переключение светлой/тёмной темы с сохранением |
+| 🎨 **Адаптивный дизайн** | Корректное отображение на телефонах и планшетах |
+| 🕐 **Часы с секундами** | Актуальное время в реальном времени |
 
-text
-VITE_WEATHER_KEY=твой_ключ
-👨‍💻 Что изучил
-Работа с DOM и событиями
+---
 
-Асинхронные запросы к API
+## 🛠️ Технологии
 
-LocalStorage
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-Геолокация
-
-Адаптивная вёрстка
-
-Деплой на Vercel и GitHub Pages
-
-Разбивка кода на модули
-
-🔗 Ссылки
-Демо
-
-GitHub
-
-OpenWeatherMap API
-
-MIT © gtxpit
-
-text
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **API:** OpenWeatherMap API
+- **Хранение:** LocalStorage (избранное, тема)
+- **Сборка:** Vite
+- **Деплой:** Vercel + GitHub
 
 ---
