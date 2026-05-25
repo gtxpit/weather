@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Если твоя ветка называется master, замени main на master
+    branches: [main]
 
 permissions:
   contents: read
@@ -29,7 +29,6 @@ jobs:
         run: npm install
 
       - name: Build
-        # Здесь Vite забирает твой секретный ключ и вставляет его в JS
         env:
           VITE_WEATHER_KEY: ${{ secrets.VITE_WEATHER_KEY }}
         run: npm run build
