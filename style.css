@@ -121,6 +121,7 @@ body.dark.snowy::before {
 }
 
 input[type="text"] {
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;;
   padding: 10px;
   font-size: 16px;
   width: 200px;
