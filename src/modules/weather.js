@@ -101,11 +101,15 @@ export function weatherLoad(city) {
                 const temp = Math.round(item.main.temp)
                 const icon = item.weather[0].icon
                 const description = item.weather[0].description
+                
                 const card = document.createElement('div')
                 card.className = 'forecast-card'
+                
+                const iconUrl = icon ? `https://openweathermap.org/img/wn/${icon}@2x.png` : 'https://openweathermap.org/img/wn/01d@2x.png'
+                
                 card.innerHTML = `
                     <div>${dayName}</div>
-                    <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${description}">
+                    <img src="${iconUrl}" alt="${description}" onerror="this.src='https://openweathermap.org/img/wn/01d@2x.png'">
                     <div class="temp">${temp}°</div>
                 `
                 domElements.forecastCards.appendChild(card)
