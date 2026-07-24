@@ -7,7 +7,7 @@ import {
     loadCitiesFromStorage, initFavorites 
 } from './src/modules/favorites.js'
 import { initTheme } from './src/modules/theme.js'
-import { initClock } from './src/modules/time.js'
+import { initClock } from './src/modules/time.ts'
 
 // ===== НАХОДИМ ВСЕ DOM ЭЛЕМЕНТЫ =====
 const dom = {
