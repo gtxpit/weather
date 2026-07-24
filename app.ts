@@ -18,11 +18,11 @@ const dom = {
     locationBtn: document.getElementById('location') as HTMLButtonElement,
     forecastCards: document.querySelector('#forecastCards') as HTMLDivElement
 }
+setDomElements(dom)
 
-
-dom.button.addEventListener('click', () => { 
+dom.button.addEventListener('click', () => {
     const city = dom.inputSave.value.trim()
-    if (!city) { 
+    if (!city) {
         dom.weatherText.textContent = 'Напиши город'
         dom.locationBtn.style.display = 'inline-block'
         return
