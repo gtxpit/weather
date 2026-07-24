@@ -2,12 +2,12 @@ import {
     domElements, setDomElements,
     weatherLoad, weatherByCoords,
     currentCityName
-} from './src/modules/weather.js'
+} from './src/modules/weather'
 import {
     loadCitiesFromStorage, initFavorites
-} from './src/modules/favorites.js'
-import { initTheme } from './src/modules/theme.js'
-import { initClock } from './src/modules/time.ts'
+} from './src/modules/favorites'
+import { initTheme } from './src/modules/theme'
+import { initClock } from './src/modules/time'
 
 const dom = {
     saveCityButton: document.querySelector(".addForever") as HTMLButtonElement,
@@ -19,42 +19,38 @@ const dom = {
     forecastCards: document.querySelector('#forecastCards') as HTMLDivElement
 }
 
-// Передаём DOM-элементы в модуль weather
-setDomElements(dom)
 
-
-dom.button.addEventListener('click', (): void => {
+dom.button.addEventListener('click', () => { 
     const city = dom.inputSave.value.trim()
-    if (city === '') {
-        dom.weatherText.textContent = 'Напиши город '
+    if (!city) { 
+        dom.weatherText.textContent = 'Напиши город'
         dom.locationBtn.style.display = 'inline-block'
         return
     }
     weatherLoad(city)
 })
 
-dom.inputSave.addEventListener('keypress', function (event): void {
+dom.inputSave.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         dom.button.click()
     }
 })
 
-dom.locationBtn.addEventListener('click', (): void => {
+dom.locationBtn.addEventListener('click', () => {
     if (!navigator.geolocation) {
         dom.weatherText.textContent = 'Геолокация не поддерживается'
         return
     }
+
     dom.weatherText.textContent = 'Определяю...'
+
     navigator.geolocation.getCurrentPosition(
         pos => weatherByCoords(pos.coords.latitude, pos.coords.longitude),
         () => dom.weatherText.textContent = 'Разрешите доступ к геолокации'
     )
 })
 
-
 initFavorites(dom.saveCityButton, () => currentCityName)
-
-
 initTheme()
 initClock()
 loadCitiesFromStorage()
