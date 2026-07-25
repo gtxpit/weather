@@ -9,14 +9,15 @@ import {
 import { initTheme } from './src/modules/theme'
 import { initClock } from './src/modules/time'
 
-const dom = {
+export const dom = {
     saveCityButton: document.querySelector(".addForever") as HTMLButtonElement,
     inputSave: document.querySelector("input") as HTMLInputElement,
     button: document.querySelector('input[type="button"]') as HTMLInputElement,
     iconImg: document.querySelector('#weatherIcon') as HTMLImageElement,
     weatherText: document.querySelector('#weatherText') as HTMLDivElement,
     locationBtn: document.getElementById('location') as HTMLButtonElement,
-    forecastCards: document.querySelector('#forecastCards') as HTMLDivElement
+    forecastCards: document.querySelector('#forecastCards') as HTMLDivElement,
+    suggestionsContainer: document.querySelector("#suggestions") as HTMLDivElement
 }
 setDomElements(dom)
 

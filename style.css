@@ -46,6 +46,7 @@ body.dark {
   font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
 
 }
+
 body {
   font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
   background: linear-gradient(135deg, var(--body-bg-start), var(--body-bg-end));
@@ -121,7 +122,8 @@ body.dark.snowy::before {
 }
 
 input[type="text"] {
-  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;;
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
+  ;
   padding: 10px;
   font-size: 16px;
   width: 200px;
@@ -223,6 +225,7 @@ input[type="button"]:hover {
   z-index: 10;
   transition: background-color 0.3s;
 }
+
 h2 {
   font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
 }
@@ -241,7 +244,7 @@ h2 {
 }
 
 .history-btn {
-  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif; 
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
   background: #f0f0f0;
   border: 1px solid #ddd;
   padding: 8px 12px;
@@ -287,7 +290,7 @@ body.dark .history-btn {
 #location {
   background-color: var(--btn-bg);
   color: white;
-  font-family:'Aptos', 'Segoe UI', 'Arial', sans-serif; 
+  font-family: 'Aptos', 'Segoe UI', 'Arial', sans-serif;
   font-weight: bold;
   padding: 8px 16px;
   font-size: 14px;
@@ -433,4 +436,58 @@ h1 {
   .history {
     padding: 10px;
   }
+}
+
+
+
+
+/* style.css */
+
+/* Поле ввода */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Контейнер для подсказок */
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e5e5e5;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Одна подсказка */
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  justify-content: space-between;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background: #f0f4ff;
+}
+
+.suggestion-item .city-name {
+  font-weight: 500;
+}
+
+.suggestion-item .city-details {
+  color: #666;
+  font-size: 14px;
 }
