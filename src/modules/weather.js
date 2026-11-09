@@ -15,9 +15,11 @@ export function setDomElements(elements) {
     Object.assign(domElements, elements)
 }
 
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY
+
 // ===== ГЕОЛОКАЦИЯ =====
 export function weatherByCoords(lat, lon) {
-    fetch(`/api/weather?lat=${lat}&lon=${lon}&lang=ru`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ru`)
         .then(res => res.json())
         .then(data => {
             if (data.cod !== 200) {
@@ -42,7 +44,8 @@ export function weatherLoad(city) {
     domElements.saveCityButton.style.display = 'none'
     domElements.locationBtn.style.display = 'inline-block'
 
-    fetch(`/api/weather?city=${city}&lang=ru`)
+    // Текущая погода
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=ru`)
         .then(response => response.json())
         .then(data => {
             if (data.cod !== 200) {
@@ -86,7 +89,8 @@ export function weatherLoad(city) {
             domElements.locationBtn.style.display = 'inline-block'
         })
 
-    fetch(`/api/weather?city=${city}&type=forecast&lang=ru`)
+    // Прогноз на 5 дней (используем /forecast вместо /weather с параметром)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=ru`)
         .then(response => response.json())
         .then(data => {
             if (data.cod !== "200") {
